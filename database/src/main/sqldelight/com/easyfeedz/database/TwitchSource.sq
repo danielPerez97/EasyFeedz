@@ -6,6 +6,7 @@ CREATE TABLE TwitchSource(
     feed_id INTEGER AS FeedsId,
     channel TEXT NOT NULL,
     url TEXT NOT NULL,
+    description TEXT,
     FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
 );
 

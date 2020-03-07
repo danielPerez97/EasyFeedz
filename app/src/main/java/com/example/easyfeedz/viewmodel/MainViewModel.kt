@@ -24,7 +24,6 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
             .map { list ->
                 list.map { ViewFeed.TwitterFeed(it.author, it.author, it.tweet, it.url) }
             }
-            .doOnNext { Log.i("MainViewModel", "SIZE TWEETS: ${it.size}") }
 
         val simpleUrlFeeds: Observable<List<ViewFeed.SimpleUrlFeed>> = database.urlSourceQueries.selectByFeedId(feedId)
             .asObservable(Schedulers.io())
@@ -32,14 +31,22 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
             .map { list ->
                 list.map { ViewFeed.SimpleUrlFeed(it.url) }
             }
-            .doOnNext { Log.i("MainViewModel", "SIZE URL: ${it.size}") }
 
-        val youtubeFeeds: Observable<List<ViewFeed.YoutubeFeed>> = Observable.just(listOf(ViewFeed.YoutubeFeed("ScatterVolt", "Prank gone wrong",
-            "https://www.youtube.com/channel/UCl6ulw6cn3npwxkg_56Ee_w", "https://yt3.ggpht.com/a/AATXAJy9W2iA_2fLGZ9bgPcFAKf3GKfspq8bhEkP=s288-c-k-c0xffffffff-no-rj-mo",
-            "High-quality youtube channel about putting PC builds together.")))
+        val youtubeFeeds: Observable<List<ViewFeed.YoutubeFeed>> = database.youtubeSourceQueries.selectByFeedId(feedId)
+            .asObservable(Schedulers.io())
+            .mapToList()
+            .map { list ->
+                list.map { ViewFeed.YoutubeFeed(it.channel, it.channel, it.url, it.pictureurl ?: "", it.description ?: "") }
+            }
 
-        val twitchFeeds: Observable<List<ViewFeed.TwitchFeed>> = Observable.just(listOf(ViewFeed.TwitchFeed("C9Mang0", "twitch.tv/mang0",
-            "Pro SSBM Player Channel")))
+        val twitchFeeds: Observable<List<ViewFeed.TwitchFeed>> = database.twitchSourceQueries.selectByFeedId(feedId)
+            .asObservable(Schedulers.io())
+            .mapToList()
+            .map { list ->
+                list.map { ViewFeed.TwitchFeed(it.channel, it.url, it.description ?: "") }
+            }
+//            Observable.just(listOf(ViewFeed.TwitchFeed("C9Mang0", "twitch.tv/mang0",
+//            "Pro SSBM Player Channel")))
 
         return Observables.zip(twitterFeeds, simpleUrlFeeds, youtubeFeeds, twitchFeeds) { first: List<ViewFeed>,
                                                                                           second: List<ViewFeed>,
@@ -63,13 +70,20 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
 
     private fun populateDummyList(feedId: FeedsId)
     {
+        // Populate twitter data
+        for (x in 0 until 1) {
+            database.tweetSourceQueries.insert(feedId, "Zain", "I AM STUPID $x", "www.twitter.com")
+        }
 
+        // Populate simple url data
         for (x in 0 until 1 ) {
             database.urlSourceQueries.insert(feedId, "Joogle $x", "www.google.com")
         }
-        for (x in 0 until 1) {
-            database.tweetSourceQueries.insert(feedId, "Zain", "I AM STUPID $x", "www.twitter.com")
-            Log.i("MainViewModel","INSERTING STUPID")
+
+        // Populate Youtube Feeds
+        for(x in 0 until 3) {
+            database.youtubeSourceQueries.insert(feedId, "Scattervolt", "https://www.youtube.com/channel/UCl6ulw6cn3npwxkg_56Ee_w", "Sick channel about PC builds",
+                "Sick channel about PC buildss")
         }
     }
 }

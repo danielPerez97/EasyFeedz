@@ -15,6 +15,9 @@ CREATE TABLE YoutubeSource(
     selectAll:
     SELECT * FROM YoutubeSource;
 
+    selectByFeedId:
+    SELECT * FROM YoutubeSource WHERE feed_id IS (?);
+
     insert:
     INSERT OR REPLACE INTO YoutubeSource(feed_id, channel, url, pictureurl, description)
     VALUES (?, ?, ?, ?, ?);
