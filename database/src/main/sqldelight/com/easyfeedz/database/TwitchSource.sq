@@ -6,7 +6,8 @@ CREATE TABLE TwitchSource(
     feed_id INTEGER AS FeedsId,
     channel TEXT NOT NULL,
     url TEXT NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
+    image_url TEXT,
     FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
 );
 
@@ -17,8 +18,12 @@ selectByFeedId:
 SELECT *FROM TwitchSource WHERE feed_id IS (?);
 
 insert:
-INSERT OR REPLACE INTO TwitchSource(feed_id, channel, url)
-VALUES (?, ?, ?);
+INSERT OR REPLACE INTO TwitchSource(feed_id, channel, url, description)
+VALUES (?, ?, ?, ?);
+
+insertWithImage:
+INSERT OR REPLACE INTO TwitchSource(feed_id, channel, url, description, image_url)
+VALUES (?, ?, ?, ?, ?);
 
 remove:
 DELETE FROM TwitchSource WHERE _id = ?;

@@ -3,10 +3,13 @@ package com.example.easyfeedz
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.example.easyfeedz.databinding.FeedTwitchEntryBinding
 import com.example.easyfeedz.databinding.FeedTwitterEntryItemBinding
 import com.example.easyfeedz.databinding.FeedUrlEntryItemBinding
@@ -19,6 +22,7 @@ enum class VIEW_TYPE { FEED_SIMPLE_URL, FEED_TWITTER, FEED_YOUTUBE, FEED_TWITCH 
 
 class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var feedList: List<ViewFeed> = Collections.emptyList()
+//    private val picasso = Picasso.
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -85,6 +89,15 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.feedTwitterName.text = feed.name
             binding.feedTwitterUsername.text = feed.username
             binding.feedTwitterTweetText.text = feed.tweetText
+
+            if(feed.imageUrl != null)
+            {
+                Log.i("TWITTERVIEWHOLDER", "NOT NULL URL")
+                val imageUri = Uri.parse(feed.imageUrl)
+                binding.feedTwitterUserPhoto.load(imageUri) {
+                    transformations(CircleCropTransformation())
+                }
+            }
         }
     }
 
@@ -99,10 +112,16 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val intent = Intent(Intent.ACTION_VIEW, webpage)
                 binding.root.context.startActivity(intent)
             }
+
+            if(feed.imageUrl != null)
+            {
+                val imageUri = Uri.parse(feed.imageUrl)
+                binding.feedTwitchThumbnail.load(imageUri)
+            }
         }
     }
 
-    class YoutubeViewHolder(private val binding: FeedYoutubeEntryItemBinding) :
+    inner class YoutubeViewHolder(private val binding: FeedYoutubeEntryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(feed: ViewFeed.YoutubeFeed) {
             binding.feedYoutubeTitle.text = feed.title
@@ -115,7 +134,7 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 binding.root.context.startActivity(intent)
             }
             val imageUri = Uri.parse(feed.thumbUrl)
-            Picasso.get().load(imageUri).into(binding.feedYoutubeThumbnail)
+            binding.feedYoutubeThumbnail.load(imageUri)
         }
     }
 

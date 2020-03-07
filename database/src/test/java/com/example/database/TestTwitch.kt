@@ -67,7 +67,7 @@ class TestTwitch
     {
         insertDummyFeedsData()
         val data: List<Feeds> = feedQueries.selectAll().executeAsList()
-        twitchQueries.insert(data[0]._id, "TwitchUser", "twitch.tv")
+        twitchQueries.insert(data[0]._id, "TwitchUser", "twitch.tv", "TwitchDescription")
     }
 
 }
