@@ -25,10 +25,11 @@
         android:padding="8dp"
         >
         <TextView
+            android:id="@+id/feed_simple_url_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Yo mama"
-            android:textSize="72sp"/>
+            android:text="URL"
+            android:textSize="24sp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
 

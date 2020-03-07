@@ -4,21 +4,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easyfeedz.databinding.FeedTwitterEntryItemBinding
+import com.example.easyfeedz.databinding.FeedUrlEntryItemBinding
+import com.example.easyfeedz.model.ViewFeed
 
-class FeedAdapter : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.feed_entry_item, parent, false)
-        return ViewHolder(itemView)
+enum class VIEW_TYPE { FEED_SIMPLE_URL, FEED_TWITTER }
+
+class FeedAdapter(feeds: List<ViewFeed>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var feedList: List<ViewFeed> = feeds
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+
+        return when (viewType){
+            VIEW_TYPE.FEED_SIMPLE_URL.ordinal ->
+                SimpleURLViewHolder(FeedUrlEntryItemBinding.inflate(inflater, parent, false))
+            VIEW_TYPE.FEED_TWITTER.ordinal ->
+                TwitterViewHolder(FeedTwitterEntryItemBinding.inflate(inflater, parent, false))
+            else ->
+                SimpleURLViewHolder(FeedUrlEntryItemBinding.inflate(inflater, parent, false))
+        }
     }
 
-    override fun getItemCount(): Int {
-        return 7
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val feed = feedList.get(position)
+        when (feed) {
+            is ViewFeed.SimpleUrlFeed -> ( (holder as SimpleURLViewHolder).bind(feed))
+            is ViewFeed.TwitterFeed -> ( (holder as TwitterViewHolder).bind(feed))
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun getItemCount(): Int = feedList.size
+
+    override fun getItemViewType(position: Int): Int {
+        val feed = feedList.get(position)
+
+        return when(feed) {
+            is ViewFeed.SimpleUrlFeed -> VIEW_TYPE.FEED_SIMPLE_URL.ordinal
+            is ViewFeed.TwitterFeed -> VIEW_TYPE.FEED_TWITTER.ordinal
+        }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    class SimpleURLViewHolder(private val binding: FeedUrlEntryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(feed: ViewFeed.SimpleUrlFeed) {
+            binding.feedSimpleUrlUrl.text = feed.url
+        }
     }
+
+    class TwitterViewHolder(private val binding: FeedTwitterEntryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(feed: ViewFeed.TwitterFeed) {
+            binding.feedTwitterName.text = feed.name
+            binding.feedTwitterUsername.text = feed.username
+            binding.feedTwitterTweetText.text = feed.tweetText
+        }
+    }
+
+
+
 }
