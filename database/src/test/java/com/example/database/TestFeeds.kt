@@ -14,10 +14,12 @@ class TestFeeds
     {
         Database.Schema.create(driver)
     }
-    private val database = Database.invoke(driver,
+    private val database: Database = Database.invoke(
+        driver,
         Feeds.Adapter(feedsIdColumnAdapter),
-        UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter),
-        UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter))
+        TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
+        UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter)
+    )
     private val feedQueries: FeedsQueries = database.feedsQueries
     private val urlSourceQueries: UrlSourceQueries = database.urlSourceQueries
 

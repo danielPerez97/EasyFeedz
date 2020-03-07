@@ -2,7 +2,7 @@ package com.example.easyfeedz.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.viewmodel.MainViewModel
+import com.example.easyfeedz.viewmodel.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

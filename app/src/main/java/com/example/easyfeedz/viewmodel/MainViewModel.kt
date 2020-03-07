@@ -1,12 +1,12 @@
-package com.example.viewmodel
+package com.example.easyfeedz.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.easyfeedz.database.Database
 import com.example.easyfeedz.model.ViewFeed
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(val long: Long): ViewModel()
+class MainViewModel @Inject constructor(val database: Database): ViewModel()
 {
     fun data(): Observable<List<ViewFeed>>
     {

@@ -1,6 +1,5 @@
 package com.example.easyfeedz
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyfeedz.databinding.ActivityMainBinding
 import com.example.easyfeedz.di.viewmodel.ViewModelFactory
 import com.example.easyfeedz.model.ViewFeed
-import com.example.viewmodel.MainViewModel
+import com.example.easyfeedz.viewmodel.MainViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
