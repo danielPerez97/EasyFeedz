@@ -66,6 +66,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
     implementation "com.jakewharton.rxbinding3:rxbinding:$rootProject.ext.rxBindingVersion"
     implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rootProject.ext.rxBindingVersion"
+    implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
 
     // Coil
     implementation("io.coil-kt:coil:$rootProject.ext.coilVersion")

@@ -14,9 +14,12 @@ CREATE TABLE TweetSource(
 selectAll:
 SELECT * FROM TweetSource;
 
+selectByFeedId:
+SELECT * FROM TweetSource WHERE feed_id IS (?);
+
 insert:
-INSERT OR REPLACE INTO TweetSource(_id, feed_id, author, tweet, url)
-VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO TweetSource(feed_id, author, tweet, url)
+VALUES (?, ?, ?, ?);
 
 remove:
 DELETE FROM TweetSource WHERE _id = ?;

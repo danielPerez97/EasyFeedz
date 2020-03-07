@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.database.FeedsId
 import com.example.easyfeedz.databinding.ActivityMainBinding
 import com.example.easyfeedz.di.viewmodel.ViewModelFactory
 import com.example.easyfeedz.model.ViewFeed
@@ -33,7 +34,9 @@ class MainActivity : AppCompatActivity()
         viewmodel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         handleRecyclerView()
 
-        disposable = viewmodel.data()
+        viewmodel.database.feedsQueries.insert("Smash")
+
+        disposable = viewmodel.data(viewmodel.database.feedsQueries.selectAll().executeAsList()[0]._id)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { Log.i("MainActivity", "SUBSCRIBED") }
             .doOnNext { Log.i("MainActivity", "RECEIVED DATA") }

@@ -13,6 +13,9 @@ CREATE TABLE UrlSource(
 selectAll:
 SELECT * FROM UrlSource;
 
+selectByFeedId:
+SELECT * FROM UrlSource WHERE feed_id IS (?);
+
 insert:
 INSERT OR REPLACE INTO UrlSource(feed_id, url, name)
 VALUES (?, ?, ?);
