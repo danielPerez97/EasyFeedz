@@ -2,16 +2,16 @@ package com.example.database
 
 import com.squareup.sqldelight.ColumnAdapter
 
-class FeedSourceId(val id: Long)
+class UrlSourceId(val id: Long)
 
-val feedSourceIdAdapter = object: ColumnAdapter<FeedSourceId, Long>
+val feedSourceIdAdapter = object: ColumnAdapter<UrlSourceId, Long>
 {
-    override fun decode(databaseValue: Long): FeedSourceId
+    override fun decode(databaseValue: Long): UrlSourceId
     {
-        return FeedSourceId(databaseValue)
+        return UrlSourceId(databaseValue)
     }
 
-    override fun encode(value: FeedSourceId): Long
+    override fun encode(value: UrlSourceId): Long
     {
         return value.id
     }
