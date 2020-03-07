@@ -1,0 +1,26 @@
+apply plugin: "java-library"
+apply plugin: "kotlin"
+apply plugin: "kotlin-kapt"
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+
+    def deps = rootProject.ext
+    // Dagger
+    implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+
+    // OkHttp, Retrofit, Moshi
+    implementation("com.squareup.okhttp3:okhttp:${deps["okhttpVersion"]}")
+    implementation("com.squareup.retrofit2:retrofit:${deps["retrofitVersion"]}")
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${deps["retrofitVersion"]}"
+    implementation("com.squareup.moshi:moshi:${deps["moshiVersion"]}")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:${deps["moshiVersion"]}")
+    implementation "com.squareup.retrofit2:converter-moshi:${deps["retrofitVersion"]}"
+
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
