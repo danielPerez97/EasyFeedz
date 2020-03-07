@@ -37,6 +37,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_account_circle_blue_24dp"
+                android:layout_marginLeft="6dp"
                 />
             <TextView
                 android:id="@+id/feed_twitter_name"
@@ -64,6 +65,7 @@
                 android:src="@drawable/twitter"/>
         </LinearLayout>
         <TextView
+            android:layout_marginTop="6dp"
             android:id="@+id/feed_twitter_tweet_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.mainDrawer.closeDrawer(binding.navigationHeaderContainer)
         binding.mainDrawer.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
+        binding.fab.setOnClickListener{
+            val i = Intent(this, CreateFeedActivity::class.java)
+            startActivity(i)
+        }
     }
 
     private fun handleRecyclerView(){
