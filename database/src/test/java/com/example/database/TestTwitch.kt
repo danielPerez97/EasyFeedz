@@ -6,7 +6,7 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class TestTweets
+class TestTwitch
 {
     private val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
     init
@@ -22,32 +22,35 @@ class TestTweets
         YoutubeSource.Adapter(youtubeSourceIdAdapter, feedsIdColumnAdapter)
     )
     private val feedQueries: FeedsQueries = database.feedsQueries
-    private val tweetsQueries: TweetSourceQueries = database.tweetSourceQueries
+    private val twitchQueries: TwitchSourceQueries = database.twitchSourceQueries
 
 
     //----------------------------------------------------------------------------------------------
     //Feeds Code Tests
     //----------------------------------------------------------------------------------------------
     @Test
-    fun testTweetsInsert()
+    fun testTwitchInsert()
     {
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
-        insertDummyTweetsData()
-        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, twitchQueries.selectAll().executeAsList().size )
+        insertDummyTwitchData()
+        assertEquals(1, twitchQueries.selectAll().executeAsList().size)
     }
 
     @Test
-    fun testTweetsRemove()
+    fun testTwitchRemove()
     {
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
-        insertDummyTweetsData()
-        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, twitchQueries.selectAll().executeAsList().size )
+        insertDummyTwitchData()
+        assertEquals(1, twitchQueries.selectAll().executeAsList().size)
 
-        val data: List<TweetSource> = tweetsQueries.selectAll().executeAsList()
-        tweetsQueries.remove(data[0]._id)
+        val data: List<TwitchSource> = twitchQueries.selectAll().executeAsList()
+        twitchQueries.remove(data[0]._id)
 
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, twitchQueries.selectAll().executeAsList().size )
+
+
     }
+
 
     //----------------------------------------------------------------------------------------------
     //Insertion Methods
@@ -60,11 +63,11 @@ class TestTweets
         feedQueries.insert("The Division")
     }
 
-
-    private fun insertDummyTweetsData()
+    private fun insertDummyTwitchData()
     {
         insertDummyFeedsData()
         val data: List<Feeds> = feedQueries.selectAll().executeAsList()
-        tweetsQueries.insert(data[0]._id,"Person","Tweet", "twitter.com")
+        twitchQueries.insert(data[0]._id, "TwitchUser", "twitch.tv")
     }
+
 }

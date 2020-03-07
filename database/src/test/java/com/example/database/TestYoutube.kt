@@ -6,13 +6,15 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class TestTweets
+class TestYoutube
 {
     private val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+
     init
     {
         Database.Schema.create(driver)
     }
+
     private val database = Database.invoke(
         driver,
         Feeds.Adapter(feedsIdColumnAdapter),
@@ -22,36 +24,41 @@ class TestTweets
         YoutubeSource.Adapter(youtubeSourceIdAdapter, feedsIdColumnAdapter)
     )
     private val feedQueries: FeedsQueries = database.feedsQueries
-    private val tweetsQueries: TweetSourceQueries = database.tweetSourceQueries
-
+    private val youtubeQueries: YoutubeSourceQueries = database.youtubeSourceQueries
 
     //----------------------------------------------------------------------------------------------
     //Feeds Code Tests
     //----------------------------------------------------------------------------------------------
+
     @Test
-    fun testTweetsInsert()
+    fun testYoutubeInsert()
     {
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
-        insertDummyTweetsData()
-        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, youtubeQueries.selectAll().executeAsList().size )
+        insertDummyYoutubeData()
+        assertEquals(1, youtubeQueries.selectAll().executeAsList().size )
     }
 
     @Test
-    fun testTweetsRemove()
+    fun testYoutubeRemove()
     {
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
-        insertDummyTweetsData()
-        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, youtubeQueries.selectAll().executeAsList().size )
+        insertDummyYoutubeData()
+        assertEquals(1, youtubeQueries.selectAll().executeAsList().size )
 
-        val data: List<TweetSource> = tweetsQueries.selectAll().executeAsList()
-        tweetsQueries.remove(data[0]._id)
+        val data: List<YoutubeSource> = youtubeQueries.selectAll().executeAsList()
+        youtubeQueries.remove(data[0]._id)
 
-        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
+        assertEquals(0, youtubeQueries.selectAll().executeAsList().size )
     }
+
+
+
+
 
     //----------------------------------------------------------------------------------------------
     //Insertion Methods
-    //----------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------
+
     private fun insertDummyFeedsData()
     {
         feedQueries.insert("Beer")
@@ -60,11 +67,14 @@ class TestTweets
         feedQueries.insert("The Division")
     }
 
-
-    private fun insertDummyTweetsData()
+    private fun insertDummyYoutubeData()
     {
         insertDummyFeedsData()
         val data: List<Feeds> = feedQueries.selectAll().executeAsList()
-        tweetsQueries.insert(data[0]._id,"Person","Tweet", "twitter.com")
+        youtubeQueries.insert(data[0]._id,"Channel","youtube.com", "picture.com", "Description")
     }
 }
+
+
+
+

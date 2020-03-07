@@ -1,0 +1,23 @@
+import com.example.database.YoutubeSourceId;
+import com.example.database.FeedsId;
+
+CREATE TABLE YoutubeSource(
+    _id INTEGER AS YoutubeSourceId PRIMARY KEY AUTOINCREMENT,
+    feed_id INTEGER AS FeedsId,
+    channel TEXT NOT NULL,
+    url TEXT NOT NULL,
+    pictureurl TEXT,
+    description TEXT,
+    FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
+
+    );
+
+    selectAll:
+    SELECT * FROM YoutubeSource;
+
+    insert:
+    INSERT OR REPLACE INTO YoutubeSource(feed_id, channel, url, pictureurl, description)
+    VALUES (?, ?, ?, ?, ?);
+
+    remove:
+    DELETE FROM YoutubeSource WHERE _id = ?;
