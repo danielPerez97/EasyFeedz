@@ -14,7 +14,7 @@ class TestFeeds
     {
         Database.Schema.create(driver)
     }
-    private val database = Database.invoke(driver)
+    private val database = Database.invoke(driver, FeedSource.Adapter(feedSourceIdAdapter, feedsIdColumnAdapter), Feeds.Adapter(feedsIdColumnAdapter))
     val feedQueries: FeedsQueries = database.feedsQueries
     val sourceQueries: FeedSourceQueries = database.feedSourceQueries
 
@@ -46,8 +46,8 @@ class TestFeeds
     {
         insertDummyData()
         insertDummySourceData()
-        val data: List<FeedSource> = sourceQueries.selectAll().executeAsList()
-//        sourceQueries.insert(data[0]._id)
+        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
+        sourceQueries.insert( data[0]._id, "", "" )
         Assertions.assertEquals( 1, sourceQueries.selectAll().executeAsList().size )
 
     }
@@ -62,13 +62,13 @@ class TestFeeds
 
     fun insertDummySourceData()
     {
-        sourceQueries.insert(1L, "youtube.com", "John Smith")
+//        sourceQueries.insert(1L, "youtube.com", "John Smith")
     }
 
 
     fun insertDummySourceDataDesc()
     {
-        sourceQueries.insertDesc(7L, "youtube.com", "John Smith","Blah Blah")
+//        sourceQueries.insertDesc(7L, "youtube.com", "John Smith","Blah Blah")
     }
 
 }

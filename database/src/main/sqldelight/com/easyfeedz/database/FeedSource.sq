@@ -1,6 +1,9 @@
+import com.example.database.FeedSourceId;
+import com.example.database.FeedsId;
+
 CREATE TABLE FeedSource(
-    _id INTEGER PRIMARY KEY AUTOINCREMENT,
-    feed_id INTEGER,
+    _id INTEGER AS FeedSourceId PRIMARY KEY AUTOINCREMENT,
+    feed_id INTEGER AS FeedsId,
     name TEXT NOT NULL,
     url TEXT NOT NULL,
     desc TEXT,
