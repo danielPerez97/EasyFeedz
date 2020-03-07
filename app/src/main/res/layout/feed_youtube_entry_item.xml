@@ -25,6 +25,7 @@
         android:padding="16dp">
 
         <ImageView
+            android:id="@+id/feed_youtube_thumbnail"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_video_label_white_24dp" />

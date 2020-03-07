@@ -12,6 +12,7 @@ import com.example.easyfeedz.databinding.FeedTwitterEntryItemBinding
 import com.example.easyfeedz.databinding.FeedUrlEntryItemBinding
 import com.example.easyfeedz.databinding.FeedYoutubeEntryItemBinding
 import com.example.easyfeedz.model.ViewFeed
+import com.squareup.picasso.Picasso
 import java.util.*
 
 enum class VIEW_TYPE { FEED_SIMPLE_URL, FEED_TWITTER, FEED_YOUTUBE, FEED_TWITCH }
@@ -113,6 +114,8 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val intent = Intent(Intent.ACTION_VIEW, webpage)
                 binding.root.context.startActivity(intent)
             }
+            val imageUri = Uri.parse(feed.thumbUrl)
+            Picasso.get().load(imageUri).into(binding.feedYoutubeThumbnail)
         }
     }
 

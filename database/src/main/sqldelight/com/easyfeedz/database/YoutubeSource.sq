@@ -9,18 +9,17 @@ CREATE TABLE YoutubeSource(
     pictureurl TEXT,
     description TEXT,
     FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
+);
 
-    );
+selectAll:
+SELECT * FROM YoutubeSource;
 
-    selectAll:
-    SELECT * FROM YoutubeSource;
+selectByFeedId:
+SELECT * FROM YoutubeSource WHERE feed_id IS (?);
 
-    selectByFeedId:
-    SELECT * FROM YoutubeSource WHERE feed_id IS (?);
+insert:
+INSERT OR REPLACE INTO YoutubeSource(feed_id, channel, url, pictureurl, description)
+VALUES (?, ?, ?, ?, ?);
 
-    insert:
-    INSERT OR REPLACE INTO YoutubeSource(feed_id, channel, url, pictureurl, description)
-    VALUES (?, ?, ?, ?, ?);
-
-    remove:
-    DELETE FROM YoutubeSource WHERE _id = ?;
+remove:
+DELETE FROM YoutubeSource WHERE _id = ?;

@@ -81,4 +81,6 @@ dependencies {
     //Material widgets
     implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
 
+    //picasso
+    implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
 }

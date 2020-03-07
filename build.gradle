@@ -44,6 +44,7 @@ ext {
     cardviewVersion = "1.0.0"
     coordinatorLayoutVersion = "1.1.0"
     materialVersion = "1.0.0"
+    picassoVersion = "2.71828"
 
     okhttpVersion = "4.3.0"
     retrofitVersion = "2.7.1"

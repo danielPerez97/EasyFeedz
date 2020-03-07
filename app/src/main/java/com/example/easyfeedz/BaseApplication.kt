@@ -1,15 +1,10 @@
 package com.example.easyfeedz
 
 import android.app.Application
-import com.easyfeedz.database.Database
+import com.easyfeedz.database.*
 import com.easyfeedz.database.Database.Companion.Schema
 import com.easyfeedz.database.Database.Companion.invoke
-import com.easyfeedz.database.Feeds
-import com.easyfeedz.database.TweetSource
-import com.easyfeedz.database.UrlSource
-import com.example.database.UrlSourceIdAdapter
-import com.example.database.feedsIdColumnAdapter
-import com.example.database.tweetSourceIdAdapter
+import com.example.database.*
 import com.example.easyfeedz.di.AppInjector
 import com.example.easyfeedz.di.AppModule
 import com.example.easyfeedz.di.DaggerAppInjector
@@ -36,7 +31,9 @@ class BaseApplication: Application()
                     driver,
                     Feeds.Adapter(feedsIdColumnAdapter),
                     TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
-                    UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter)
+                    TwitchSource.Adapter(twitchSourceIdAdapter, feedsIdColumnAdapter),
+                    UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter),
+                    YoutubeSource.Adapter(youtubeSourceIdAdapter, feedsIdColumnAdapter)
                 ))
             )
             .build()
