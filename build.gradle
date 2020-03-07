@@ -42,4 +42,6 @@ ext {
     lifecycleVersion = "2.1.0"
     recyclerviewVersion = "1.0.0"
     cardviewVersion = "1.0.0"
+    coordinatorLayoutVersion = "1.1.0"
+    materialVersion = "1.0.0"
 }

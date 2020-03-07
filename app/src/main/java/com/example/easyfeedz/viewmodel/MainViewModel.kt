@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
             .asObservable(Schedulers.io())
             .mapToList()
             .map { list ->
-                list.map { ViewFeed.TwitterFeed(it.author, it.author, it.tweet) }
+                list.map { ViewFeed.TwitterFeed(it.author, it.author, it.tweet, it.url) }
             }
             .doOnNext { Log.i("MainViewModel", "SIZE TWEETS: ${it.size}") }
 
@@ -34,12 +34,23 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
             }
             .doOnNext { Log.i("MainViewModel", "SIZE URL: ${it.size}") }
 
+        val youtubeFeeds: Observable<List<ViewFeed.YoutubeFeed>> = Observable.just(listOf(ViewFeed.YoutubeFeed("ScatterVolt", "Prank gone wrong",
+            "https://www.youtube.com/channel/UCl6ulw6cn3npwxkg_56Ee_w", "https://yt3.ggpht.com/a/AATXAJy9W2iA_2fLGZ9bgPcFAKf3GKfspq8bhEkP=s288-c-k-c0xffffffff-no-rj-mo",
+            "High-quality youtube channel about putting PC builds together.")))
 
-        return Observables.zip(twitterFeeds, simpleUrlFeeds) { first: List<ViewFeed>, second: List<ViewFeed> ->
+        val twitchFeeds: Observable<List<ViewFeed.TwitchFeed>> = Observable.just(listOf(ViewFeed.TwitchFeed("C9Mang0", "twitch.tv/mang0",
+            "Pro SSBM Player Channel")))
+
+        return Observables.zip(twitterFeeds, simpleUrlFeeds, youtubeFeeds, twitchFeeds) { first: List<ViewFeed>,
+                                                                                          second: List<ViewFeed>,
+                                                                                          third: List<ViewFeed>,
+                                                                                            fourth: List<ViewFeed> ->
             val mergedList = mutableListOf<ViewFeed>()
-                mergedList.addAll(first)
-                mergedList.addAll(second)
-                return@zip mergedList.toList()
+            mergedList.addAll(first)
+            mergedList.addAll(second)
+            mergedList.addAll(third)
+            mergedList.addAll(fourth)
+            return@zip mergedList.toList()
         }
     }
 
@@ -53,10 +64,10 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
     private fun populateDummyList(feedId: FeedsId)
     {
 
-        for (x in 0 until 3 ) {
+        for (x in 0 until 1 ) {
             database.urlSourceQueries.insert(feedId, "Joogle $x", "www.google.com")
         }
-        for (x in 0 until 3) {
+        for (x in 0 until 1) {
             database.tweetSourceQueries.insert(feedId, "Zain", "I AM STUPID $x", "www.twitter.com")
             Log.i("MainViewModel","INSERTING STUPID")
         }

@@ -74,4 +74,11 @@ dependencies {
     // CardView
     implementation "androidx.cardview:cardview:$rootProject.ext.cardviewVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerviewVersion"
+
+    //coordinator layout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$rootProject.ext.coordinatorLayoutVersion"
+
+    //Material widgets
+    implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
+
 }

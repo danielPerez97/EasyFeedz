@@ -16,13 +16,13 @@
     app:cardElevation="6dp"
     >
     <LinearLayout
-        android:id="@+id/list_entry_linear_layout"
+        android:id="@+id/feed_simple_url_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:padding="8dp"
+        android:padding="16dp"
         >
         <TextView
             android:id="@+id/feed_simple_url_url"
