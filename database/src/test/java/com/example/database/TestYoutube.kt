@@ -6,10 +6,12 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class TestYoutube {
+class TestYoutube
+{
     private val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
 
-    init {
+    init
+    {
         Database.Schema.create(driver)
     }
 
@@ -17,6 +19,7 @@ class TestYoutube {
         driver,
         Feeds.Adapter(feedsIdColumnAdapter),
         TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
+        TwitchSource.Adapter(twitchSourceIdAdapter, feedsIdColumnAdapter),
         UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter),
         YoutubeSource.Adapter(youtubeSourceIdAdapter, feedsIdColumnAdapter)
     )

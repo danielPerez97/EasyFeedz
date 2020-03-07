@@ -19,7 +19,8 @@ class TestFeeds
         Feeds.Adapter(feedsIdColumnAdapter),
         TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
         TwitchSource.Adapter(twitchSourceIdAdapter, feedsIdColumnAdapter),
-        UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter)
+        UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter),
+        YoutubeSource.Adapter(youtubeSourceIdAdapter, feedsIdColumnAdapter)
     )
     private val feedQueries: FeedsQueries = database.feedsQueries
     private val urlSourceQueries: UrlSourceQueries = database.urlSourceQueries
