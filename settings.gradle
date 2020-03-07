@@ -1,3 +1,4 @@
 rootProject.name='EasyFeedz'
 include ':app'
 include ':database'
+include ':twitter'
