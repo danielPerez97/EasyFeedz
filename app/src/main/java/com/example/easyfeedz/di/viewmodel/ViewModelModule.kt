@@ -2,6 +2,7 @@ package com.example.easyfeedz.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.easyfeedz.viewmodel.CreateFeedViewModel
 import com.example.easyfeedz.viewmodel.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -17,4 +18,9 @@ abstract class ViewModelModule
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun cookViewModel(viewModel: MainViewModel?): ViewModel?
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateFeedViewModel::class)
+    abstract fun createFeedViewModel(viewModel: CreateFeedViewModel?): ViewModel?
 }

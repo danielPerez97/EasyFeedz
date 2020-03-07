@@ -75,7 +75,7 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
 
         // Populate simple url data
         for (x in 0 until 1 ) {
-            database.urlSourceQueries.insert(feedId, "Joogle $x", "www.google.com")
+            database.urlSourceQueries.insert(feedId, "Public Object", "https://publicobject.com/")
         }
 
         // Populate Youtube Feeds
