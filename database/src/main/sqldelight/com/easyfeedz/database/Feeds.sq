@@ -8,3 +8,8 @@ SELECT * FROM Feeds;
 
 insert:
 INSERT OR REPLACE INTO Feeds(name) VALUES (?);
+
+
+remove:
+DELETE FROM Feeds WHERE _id = ?;
+

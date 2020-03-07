@@ -1,0 +1,20 @@
+CREATE TABLE FeedSource(
+    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    feed_id INTEGER,
+    name TEXT NOT NULL,
+    url TEXT NOT NULL,
+    desc TEXT,
+    FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
+);
+
+selectAll:
+SELECT * FROM FeedSource;
+
+insert:
+INSERT OR REPLACE INTO FeedSource(feed_id, url, name)
+VALUES (?, ?, ?);
+
+insertDesc:
+INSERT OR REPLACE INTO FeedSource(feed_id, url, name, desc)
+VALUES (?, ?, ?, ?);
+
