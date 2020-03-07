@@ -9,7 +9,6 @@ CREATE TABLE TweetSource(
     url TEXT NOT NULL,
     image_url TEXT,
     FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
-
 );
 
 selectAll:

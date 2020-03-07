@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
 {
     fun data(feedId: FeedsId): Observable<List<ViewFeed>>
     {
-        populateDummyList(feedId)
+//        populateDummyList(feedId)
         val twitterFeeds: Observable<List<ViewFeed.TwitterFeed>> = database.tweetSourceQueries.selectByFeedId(feedId)
             .asObservable(Schedulers.io())
             .mapToList()
@@ -29,7 +29,7 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
             .asObservable(Schedulers.io())
             .mapToList()
             .map { list ->
-                list.map { ViewFeed.SimpleUrlFeed(it.url) }
+                list.map { ViewFeed.SimpleUrlFeed(it.name, it.url) }
             }
 
         val youtubeFeeds: Observable<List<ViewFeed.YoutubeFeed>> = database.youtubeSourceQueries.selectByFeedId(feedId)
@@ -59,11 +59,15 @@ class MainViewModel @Inject constructor(val database: Database): ViewModel()
         }
     }
 
+    fun databaseIsEmpty(): Boolean
+    {
+        return database.feedsQueries.selectAll().executeAsList().isEmpty()
+    }
     fun sideBarList(): Observable<List<ViewHobby>>
     {
         return database.feedsQueries.selectAll().asObservable(Schedulers.io())
             .mapToList()
-            .map { list -> list.map { ViewHobby(it.name) } }
+            .map { list -> list.map { ViewHobby(it._id, it.name) } }
     }
 
     private fun populateDummyList(feedId: FeedsId)

@@ -1,11 +1,9 @@
-package com.example.easyfeedz
+package com.example.easyfeedz.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -15,7 +13,6 @@ import com.example.easyfeedz.databinding.FeedTwitterEntryItemBinding
 import com.example.easyfeedz.databinding.FeedUrlEntryItemBinding
 import com.example.easyfeedz.databinding.FeedYoutubeEntryItemBinding
 import com.example.easyfeedz.model.ViewFeed
-import com.squareup.picasso.Picasso
 import java.util.*
 
 enum class VIEW_TYPE { FEED_SIMPLE_URL, FEED_TWITTER, FEED_YOUTUBE, FEED_TWITCH }
@@ -29,16 +26,24 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         return when (viewType) {
             VIEW_TYPE.FEED_SIMPLE_URL.ordinal ->
-                SimpleURLViewHolder(FeedUrlEntryItemBinding.inflate(inflater, parent, false))
+                SimpleURLViewHolder(
+                    FeedUrlEntryItemBinding.inflate(inflater, parent, false)
+                )
             VIEW_TYPE.FEED_TWITTER.ordinal ->
-                TwitterViewHolder(FeedTwitterEntryItemBinding.inflate(inflater, parent, false))
+                TwitterViewHolder(
+                    FeedTwitterEntryItemBinding.inflate(inflater, parent, false)
+                )
 
             VIEW_TYPE.FEED_TWITCH.ordinal ->
-                TwitchViewHolder(FeedTwitchEntryBinding.inflate(inflater, parent, false))
+                TwitchViewHolder(
+                    FeedTwitchEntryBinding.inflate(inflater, parent, false)
+                )
             VIEW_TYPE.FEED_YOUTUBE.ordinal ->
                 YoutubeViewHolder(FeedYoutubeEntryItemBinding.inflate(inflater, parent, false))
             else ->
-                SimpleURLViewHolder(FeedUrlEntryItemBinding.inflate(inflater, parent, false))
+                SimpleURLViewHolder(
+                    FeedUrlEntryItemBinding.inflate(inflater, parent, false)
+                )
         }
     }
 
@@ -74,11 +79,12 @@ class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class SimpleURLViewHolder(private val binding: FeedUrlEntryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(feed: ViewFeed.SimpleUrlFeed) {
-            binding.feedSimpleUrlUrl.text = feed.url
+            binding.feedSimpleUrlUrl.text = feed.name
 
             val webpage: Uri = Uri.parse(feed.url)
             binding.root.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, webpage)
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = webpage
                 binding.root.context.startActivity(intent)
             }
         }

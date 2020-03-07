@@ -38,14 +38,17 @@
             app:useCompatPadding="true" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
+        app:headerLayout="@layout/nav_header"
         android:id="@+id/navigation_header_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/hobby_menu"
         android:layout_gravity="start"
         android:foregroundGravity="left">
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_feeds"
+            android:layout_marginTop="160dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>

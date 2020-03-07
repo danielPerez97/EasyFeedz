@@ -17,11 +17,11 @@ selectByFeedId:
 SELECT * FROM UrlSource WHERE feed_id IS (?);
 
 insert:
-INSERT OR REPLACE INTO UrlSource(feed_id, url, name)
+INSERT OR REPLACE INTO UrlSource(feed_id, name, url)
 VALUES (?, ?, ?);
 
 insertDesc:
-INSERT OR REPLACE INTO UrlSource(feed_id, url, name, desc)
+INSERT OR REPLACE INTO UrlSource(feed_id, name, url, desc)
 VALUES (?, ?, ?, ?);
 
 remove:

@@ -1,3 +1,5 @@
 package com.example.easyfeedz.model
 
-class ViewHobby(val name: String)
+import com.example.database.FeedsId
+
+class ViewHobby(val feedsId: FeedsId, val name: String)
