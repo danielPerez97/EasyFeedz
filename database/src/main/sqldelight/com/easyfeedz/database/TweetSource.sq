@@ -1,0 +1,24 @@
+import com.example.database.TweetSourceId;
+import com.example.database.FeedsId;
+
+CREATE TABLE TweetSource(
+    _id INTEGER AS TweetSourceId PRIMARY KEY AUTOINCREMENT,
+    feed_id INTEGER AS FeedsId,
+    author TEXT NOT NULL,
+    tweet TEXT NOT NULL,
+    url TEXT NOT NULL,
+    FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
+
+);
+
+selectAll:
+SELECT * FROM TweetSource;
+
+insert:
+INSERT OR REPLACE INTO TweetSource(_id, feed_id, author, tweet, url)
+VALUES (?, ?, ?, ?, ?);
+
+remove:
+DELETE FROM TweetSource WHERE _id = ?;
+
+

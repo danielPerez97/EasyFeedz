@@ -1,10 +1,22 @@
+import com.example.database.FeedsId;
+
 CREATE TABLE Feeds(
-    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    _id INTEGER AS FeedsId PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 selectAll:
 SELECT * FROM Feeds;
 
+selectById:
+SELECT * FROM Feeds WHERE _id IS (?);
+
 insert:
 INSERT OR REPLACE INTO Feeds(name) VALUES (?);
+
+remove:
+DELETE FROM Feeds WHERE _id = ?;
+
+update:
+REPLACE INTO Feeds(_id, name) VALUES (?, ?);
+
