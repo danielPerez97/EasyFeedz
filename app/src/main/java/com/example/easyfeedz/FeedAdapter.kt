@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easyfeedz.databinding.FeedTwitterEntryItemBinding
 import com.example.easyfeedz.databinding.FeedUrlEntryItemBinding
 import com.example.easyfeedz.model.ViewFeed
+import java.util.*
 
 enum class VIEW_TYPE { FEED_SIMPLE_URL, FEED_TWITTER }
 
-class FeedAdapter(feeds: List<ViewFeed>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var feedList: List<ViewFeed> = feeds
+class FeedAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var feedList: List<ViewFeed> = Collections.emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -43,6 +44,12 @@ class FeedAdapter(feeds: List<ViewFeed>) : RecyclerView.Adapter<RecyclerView.Vie
             is ViewFeed.SimpleUrlFeed -> VIEW_TYPE.FEED_SIMPLE_URL.ordinal
             is ViewFeed.TwitterFeed -> VIEW_TYPE.FEED_TWITTER.ordinal
         }
+    }
+
+    fun setData(newData: List<ViewFeed>)
+    {
+        feedList = newData
+        notifyDataSetChanged()
     }
 
 

@@ -3,17 +3,25 @@ package com.example.easyfeedz
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyfeedz.databinding.ActivityMainBinding
+import com.example.easyfeedz.di.viewmodel.ViewModelFactory
 import com.example.easyfeedz.model.ViewFeed
+import com.example.viewmodel.MainViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity()
 {
 
+    @Inject lateinit var factory: ViewModelFactory
+    lateinit var viewmodel: MainViewModel
     lateinit var binding: ActivityMainBinding
-    @Inject lateinit var appContext: Context
 
+    lateinit var disposable: Disposable
     lateinit var feedAdapter : FeedAdapter
     lateinit var feedList : MutableList<ViewFeed>
 
@@ -23,28 +31,21 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        viewmodel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         handleRecyclerView()
+
+        disposable = viewmodel.data()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { Log.i("MainActivity", "SUBSCRIBED") }
+            .doOnNext { Log.i("MainActivity", "RECEIVED DATA") }
+            .subscribe {
+                feedAdapter.setData(it)
+            }
     }
 
     private fun handleRecyclerView(){
-        populateDummyList()
-        feedAdapter = FeedAdapter(feedList)
+        feedAdapter = FeedAdapter()
         binding.recyclerviewFeed.adapter = feedAdapter
         binding.recyclerviewFeed.layoutManager = LinearLayoutManager(baseContext)
-    }
-
-    private fun populateDummyList(){
-        feedList = mutableListOf()
-        for (x in 0 until 3 ) {
-            val feed = ViewFeed.SimpleUrlFeed("www.google.com")
-            feedList.add(feed)
-        }
-        for (x in 0 until 2) {
-            val feed = ViewFeed.TwitterFeed("John Doe", "@johndoe", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-            feedList.add(feed)
-        }
-        val feed = ViewFeed.TwitterFeed("Jane Arse", "@jarse", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-        feedList.add(feed)
     }
 }
