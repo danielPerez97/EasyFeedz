@@ -15,8 +15,8 @@ selectAll:
 SELECT * FROM TweetSource;
 
 insert:
-INSERT OR REPLACE INTO TweetSource(_id, feed_id, author, tweet, url)
-VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO TweetSource(feed_id, author, tweet, url)
+VALUES (?, ?, ?, ?);
 
 remove:
 DELETE FROM TweetSource WHERE _id = ?;
