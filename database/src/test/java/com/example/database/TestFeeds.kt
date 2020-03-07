@@ -15,44 +15,90 @@ class TestFeeds
         Database.Schema.create(driver)
     }
     private val database = Database.invoke(driver, FeedSource.Adapter(feedSourceIdAdapter, feedsIdColumnAdapter), Feeds.Adapter(feedsIdColumnAdapter))
-    val feedQueries: FeedsQueries = database.feedsQueries
-    val sourceQueries: FeedSourceQueries = database.feedSourceQueries
+    private val feedQueries: FeedsQueries = database.feedsQueries
+    private val sourceQueries: FeedSourceQueries = database.feedSourceQueries
 
+
+    //----------------------------------------------------------------------------------------------
+    //Feeds Code Tests
+    //----------------------------------------------------------------------------------------------
     @Test
     fun testFeedInsert()
     {
         Assertions.assertEquals(0, feedQueries.selectAll().executeAsList().size )
-        insertDummyData()
+        insertDummyFeedsData()
         Assertions.assertEquals( 4, feedQueries.selectAll().executeAsList().size )
     }
-
 
 
     @Test
     fun testFeedRemove()
     {
-        insertDummyData()
+        insertDummyFeedsData()
         Assertions.assertEquals( 4, feedQueries.selectAll().executeAsList().size )
 
         val data: List<Feeds> = feedQueries.selectAll().executeAsList()
         feedQueries.remove(data[0]._id)
 
         Assertions.assertEquals( 3, feedQueries.selectAll().executeAsList().size )
+    }
 
+    @Test
+    fun testFeedUpdate()
+    {
+        insertDummyFeedsData()
+        Assertions.assertEquals(4,feedQueries.selectAll().executeAsList().size)
+
+        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
+        val id: FeedsId = data[0]._id
+
+        // Update
+        feedQueries.update(id, "Woodcutting")
+        Assertions.assertEquals(4,feedQueries.selectAll().executeAsList().size)
+
+        // Test the update
+        val feed = feedQueries.selectById(id).executeAsOne()
+        Assertions.assertEquals("Woodcutting", feed.name)
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //FeedSource Code Tests
+    //----------------------------------------------------------------------------------------------
+    @Test
+    fun testFeedSourceRemove()
+    {
+        Assertions.assertEquals( 0, sourceQueries.selectAll().executeAsList().size )
+        insertDummyFeedsData()
+        insertDummySourceData()
+        Assertions.assertEquals( 1, sourceQueries.selectAll().executeAsList().size )
+        val data: List<FeedSource> = sourceQueries.selectAll().executeAsList()
+        sourceQueries.remove(data[0]._id)
+        Assertions.assertEquals( 0, sourceQueries.selectAll().executeAsList().size )
     }
 
     @Test
     fun testFeedSourceInsert()
     {
-        insertDummyData()
+        insertDummyFeedsData()
         insertDummySourceData()
-        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
-        sourceQueries.insert( data[0]._id, "", "" )
+        Assertions.assertEquals( 1, sourceQueries.selectAll().executeAsList().size )
+    }
+
+    @Test
+    fun testFeedSourceInsertDesc()
+    {
+        insertDummyFeedsData()
+        insertDummySourceDataDesc()
         Assertions.assertEquals( 1, sourceQueries.selectAll().executeAsList().size )
 
     }
 
-    fun insertDummyData()
+    //----------------------------------------------------------------------------------------------
+    //Insertion Methods
+    //----------------------------------------------------------------------------------------------
+
+    private fun insertDummyFeedsData()
     {
         feedQueries.insert("Beer")
         feedQueries.insert("Smash")
@@ -60,15 +106,23 @@ class TestFeeds
         feedQueries.insert("The Division")
     }
 
-    fun insertDummySourceData()
+    private fun insertDummySourceData()
     {
-//        sourceQueries.insert(1L, "youtube.com", "John Smith")
+        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
+        sourceQueries.insert(data[0]._id, "youtube.com", "John Smith")
+    }
+
+    private fun insertDummySourceDataDesc()
+    {
+        insertDummyFeedsData()
+        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
+        sourceQueries.insertDesc(data[0]._id, "youtube.com", "John Smith","Blah Blah")
     }
 
 
-    fun insertDummySourceDataDesc()
-    {
-//        sourceQueries.insertDesc(7L, "youtube.com", "John Smith","Blah Blah")
-    }
+
+
+
 
 }
+

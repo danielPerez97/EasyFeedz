@@ -21,3 +21,5 @@ insertDesc:
 INSERT OR REPLACE INTO FeedSource(feed_id, url, name, desc)
 VALUES (?, ?, ?, ?);
 
+remove:
+DELETE FROM FeedSource WHERE _id = ?;

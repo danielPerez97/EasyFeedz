@@ -8,10 +8,15 @@ CREATE TABLE Feeds(
 selectAll:
 SELECT * FROM Feeds;
 
+selectById:
+SELECT * FROM Feeds WHERE _id IS (?);
+
 insert:
 INSERT OR REPLACE INTO Feeds(name) VALUES (?);
 
-
 remove:
 DELETE FROM Feeds WHERE _id = ?;
+
+update:
+REPLACE INTO Feeds(_id, name) VALUES (?, ?);
 

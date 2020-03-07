@@ -2,7 +2,7 @@ package com.example.database
 
 import com.squareup.sqldelight.ColumnAdapter
 
-inline class FeedSourceId(val id: Long)
+class FeedSourceId(val id: Long)
 
 val feedSourceIdAdapter = object: ColumnAdapter<FeedSourceId, Long>
 {
