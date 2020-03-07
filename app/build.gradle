@@ -67,4 +67,8 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil:$rootProject.ext.coilVersion")
+
+    // CardView
+    implementation "androidx.cardview:cardview:$rootProject.ext.cardviewVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerviewVersion"
 }

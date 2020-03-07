@@ -40,4 +40,6 @@ ext {
     glideVersion = "4.11.0"
     coilVersion = "0.9.5"
     lifecycleVersion = "2.1.0"
+    recyclerviewVersion = "1.0.0"
+    cardviewVersion = "1.0.0"
 }
