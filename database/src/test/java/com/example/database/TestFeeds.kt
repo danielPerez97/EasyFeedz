@@ -18,6 +18,7 @@ class TestFeeds
         driver,
         Feeds.Adapter(feedsIdColumnAdapter),
         TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
+        TwitchSource.Adapter(twitchSourceIdAdapter, feedsIdColumnAdapter),
         UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter)
     )
     private val feedQueries: FeedsQueries = database.feedsQueries

@@ -1,0 +1,24 @@
+import com.example.database.RedditSourceId;
+import com.example.database.FeedsId;
+
+CREATE TABLE RedditSource(
+    _id INTEGER AS RedditSourceId PRIMARY KEY AUTOINCREMENT,
+    feed_id INTEGER AS FeedsId,
+    title TEXT NOT NULL,
+    url TEXT NOT NULL,
+    subreddit TEXT NOT NULL,
+    FOREIGN KEY (feed_id) REFERENCES Feeds(_id)
+);
+
+selectAll:
+SELECT * FROM RedditSource;
+
+selectByFeedId:
+SELECT * FROM RedditSource WHERE feed_id IS (?);
+
+insert:
+INSERT OR REPLACE INTO RedditSource(feed_id, title, url, subreddit)
+VALUES (?, ?, ?, ?);
+
+remove:
+DELETE FROM RedditSource WHERE _id = ?;
