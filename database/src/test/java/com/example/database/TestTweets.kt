@@ -19,6 +19,7 @@ class TestTweets
         TweetSource.Adapter(tweetSourceIdAdapter, feedsIdColumnAdapter),
         UrlSource.Adapter(UrlSourceIdAdapter, feedsIdColumnAdapter)
     )
+    private val feedQueries: FeedsQueries = database.feedsQueries
     private val tweetsQueries: TweetSourceQueries = database.tweetSourceQueries
 
 
@@ -29,17 +30,39 @@ class TestTweets
     fun testTweetsInsert()
     {
         assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
-
+        insertDummyTweetsData()
+        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
     }
 
     @Test
     fun testTweetsRemove()
     {
+        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
+        insertDummyTweetsData()
+        assertEquals(1, tweetsQueries.selectAll().executeAsList().size )
 
+        val data: List<TweetSource> = tweetsQueries.selectAll().executeAsList()
+        tweetsQueries.remove(data[0]._id)
+
+        assertEquals(0, tweetsQueries.selectAll().executeAsList().size )
     }
 
-    private fun insertDummySourceTweet()
+    //----------------------------------------------------------------------------------------------
+    //Insertion Methods
+    //----------------------------------------------------------------------------------------------
+    private fun insertDummyFeedsData()
     {
-//        val data: List<TweetsSource>
+        feedQueries.insert("Beer")
+        feedQueries.insert("Smash")
+        feedQueries.insert("Movies")
+        feedQueries.insert("The Division")
+    }
+
+
+    private fun insertDummyTweetsData()
+    {
+        insertDummyFeedsData()
+        val data: List<Feeds> = feedQueries.selectAll().executeAsList()
+        tweetsQueries.insert(data[0]._id,"Person","Tweet", "twitter.com")
     }
 }
